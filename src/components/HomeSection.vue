@@ -29,6 +29,27 @@
       </div>
     </div>
     
+    <!-- Circuit lines -->
+    <div class="absolute inset-0 overflow-hidden pointer-events-none">
+      <svg class="absolute inset-0 w-full h-full" viewBox="0 0 1200 800">
+        <path class="circuit-line" d="M0,400 Q300,200 600,400 T1200,400" stroke="rgba(0, 212, 255, 0.3)" stroke-width="1" fill="none"/>
+        <path class="circuit-line" d="M0,600 Q300,400 600,600 T1200,600" stroke="rgba(255, 0, 255, 0.3)" stroke-width="1" fill="none"/>
+        <circle class="circuit-node" cx="300" cy="300" r="4" fill="#00d4ff"/>
+        <circle class="circuit-node" cx="600" cy="400" r="4" fill="#00d4ff"/>
+        <circle class="circuit-node" cx="900" cy="500" r="4" fill="#ff00ff"/>
+      </svg>
+    </div>
+    
+    <!-- Binary rain -->
+    <!-- <div class="binary-rain">
+      <span v-for="i in 50" :key="i" class="binary-digit" :style="{
+        left: `${Math.random() * 100}%`,
+        top: `${Math.random() * 100}%`,
+        animationDelay: `${Math.random() * 5}s`,
+        animationDuration: `${5 + Math.random() * 10}s`
+      }">{{ Math.random() > 0.5 ? '1' : '0' }}</span>
+    </div>
+     -->
     <div class="container mx-auto px-4 sm:px-6 relative z-10">
       <div class="flex flex-col lg:flex-row items-center min-h-screen">
         <div class="w-full lg:w-1/2 mb-10 lg:mb-0 animate-on-scroll fade-in-up py-20 lg:py-0">
@@ -64,6 +85,41 @@
               </svg>
               Download CV
             </a>
+          </div>
+          
+          <!-- Animated Stats Section -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12 mb-10">
+            <div class="digit-card animate-on-scroll fade-in-up" style="animation-delay: 0.1s">
+              <div class="digit-container">
+                <span class="home-digit digit-animate" data-target="4" data-duration="2000">0</span>
+                <span class="digit-separator">+</span>
+              </div>
+              <div class="digit-label">YEARS EXPERIENCE</div>
+            </div>
+            
+            <div class="digit-card animate-on-scroll fade-in-up" style="animation-delay: 0.2s">
+              <div class="digit-container">
+                <span class="home-digit digit-animate" data-target="4" data-duration="2000">0</span>
+                <span class="digit-separator">+</span>
+              </div>
+              <div class="digit-label">PROJECTS</div>
+            </div>
+            
+            <div class="digit-card animate-on-scroll fade-in-up" style="animation-delay: 0.3s">
+              <div class="digit-container">
+                <span class="home-digit digit-animate" data-target="3" data-duration="2000">0</span>
+                <span class="digit-separator">+</span>
+              </div>
+              <div class="digit-label">HAPPY CLIENTS</div>
+            </div>
+            
+            <div class="digit-card animate-on-scroll fade-in-up" style="animation-delay: 0.4s">
+              <div class="digit-container">
+                <span class="home-digit digit-animate" data-target="2" data-duration="2000">0</span>
+                <span class="digit-separator">+</span>
+              </div>
+              <div class="digit-label">TECHNOLOGIES</div>
+            </div>
           </div>
           
           <div class="mt-10 animate-on-scroll fade-in-up" style="animation-delay: 0.4s">
@@ -131,26 +187,30 @@
         </svg>
       </div>
     </div>
+    
+    <!-- Code Snippet (Now on left side with toggle) -->
+    <CodeSnippet />
   </section>
 </template>
 
 <script>
 import { ref, onMounted } from 'vue';
-
+import CodeSnippet from './CodeSnippet.vue';
 // Tech icons components
 const VueIcon = {
   template: `<svg viewBox="0 0 128 128" fill="none"><path d="M2 58.6L66.2 2.1c1.1-1 2.8-1 3.9 0l56 50.6c1.5 1.4 1.5 3.8 0 5.2l-56 50.6c-1.1 1-2.8 1-3.9 0L2 63.8c-1.5-1.4-1.5-3.8 0-5.2z" fill="#41B883"/><path d="M125.1 58.6L64.2 5.1c-1.1-1-2.8-1-3.9 0L2 58.6c-1.5 1.4-1.5 3.8 0 5.2l58.3 53.5c1.1 1 2.8 1 3.9 0l61-56.5c1.5-1.4 1.5-3.8 0-5.2z" fill="#34495E"/></svg>`
 };
-
 const NodeIcon = {
-  template: `<svg viewBox="0 0 128 128" fill="none"><path d="M115.4 30.7l-48.3-27.8c-.4-.2-.9-.2-1.3 0L17.6 30.7c-.4.2-.6.7-.6 1.1v54.4c0 .4.2.9.6 1.1l48.3 27.9c.4.2.9.2 1.3 0l48.3-27.9c.4-.2.6-.7.6-1.1V31.8c0-.4-.2-.9-.6-1.1z" fill="#689F63"/><path d="M115.4 30.7l-48.3-27.8c-.4-.2-.9-.2-1.3 0L17.6 30.7c-.4.2-.6.7-.6 1.1v54.4c0 .4.2.9.6 1.1l48.3 27.9c.4.2.9.2 1.3 0l48.3-27.9c.4-.2.6-.7.6-1.1V31.8c0-.4-.2-.9-.6-1.1z" fill="#333" opacity=".2"/></svg>`
+  template: `<svg viewBox="0 0 128 128" fill="none"><path d="M115.4 30.7l-48.3-27.8c-.4-.2-.9-.2-1.3 0L17.6 30.7c-.4.2-.6.7-.6 1.1v54.4c0 .4.2.9.6 1.1l48.3 27.9c.4.2.9.2 1.3 0l48.3-27.9c.4-.2-.6-.7-.6-1.1z" fill="#689F63"/><path d="M115.4 30.7l-48.3-27.8c-.4-.2-.9-.2-1.3 0L17.6 30.7c-.4.2-.6.7-.6 1.1v54.4c0 .4.2.9.6 1.1l48.3 27.9c.4-.2-.6-.7-.6-1.1z" fill="#333" opacity=".2"/></svg>`
 };
-
 const JsIcon = {
   template: `<svg viewBox="0 0 128 128" fill="none"><path d="M2 58.6L66.2 2.1c1.1-1 2.8-1 3.9 0l56 50.6c1.5 1.4 1.5 3.8 0 5.2l-56 50.6c-1.1 1-2.8 1-3.9 0L2 63.8c-1.5-1.4-1.5-3.8 0-5.2z" fill="#F7DF1E"/><path d="M125.1 58.6L64.2 5.1c-1.1-1-2.8-1-3.9 0L2 58.6c-1.5 1.4-1.5 3.8 0 5.2l58.3 53.5c1.1 1 2.8 1 3.9 0l61-56.5c1.5-1.4 1.5-3.8 0-5.2z" fill="#333" opacity=".2"/></svg>`
 };
 
 export default {
+  components: {
+    CodeSnippet
+  },
   methods: {
     downloadCV() {
       // Create a link element
@@ -170,6 +230,63 @@ export default {
       
       // Remove the link from the body
       document.body.removeChild(link);
+    },
+    typeText() {
+      const fullText = this.typingTexts[this.currentTextIndex];
+      
+      if (this.isDeleting) {
+        this.currentText = fullText.substring(0, this.currentText.length - 1);
+      } else {
+        this.currentText = fullText.substring(0, this.currentText.length + 1);
+      }
+      
+      let typeSpeed = this.isDeleting ? this.deletingSpeed : this.typingSpeed;
+      
+      if (!this.isDeleting && this.currentText === fullText) {
+        typeSpeed = this.pauseDuration;
+        this.isDeleting = true;
+      } else if (this.isDeleting && this.currentText === '') {
+        this.isDeleting = false;
+        this.currentTextIndex = (this.currentTextIndex + 1) % this.typingTexts.length;
+        typeSpeed = 500;
+      }
+      
+      setTimeout(() => this.typeText(), typeSpeed);
+    },
+    initDigitAnimations() {
+      const digitElements = document.querySelectorAll('.home-digit');
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const element = entry.target;
+            const targetValue = parseInt(element.getAttribute('data-target'));
+            const duration = parseInt(element.getAttribute('data-duration')) || 2000;
+            
+            let startValue = 0;
+            const increment = targetValue / (duration / 16);
+            
+            const updateCounter = () => {
+              startValue += increment;
+              if (startValue < targetValue) {
+                element.textContent = Math.ceil(startValue);
+                requestAnimationFrame(updateCounter);
+              } else {
+                element.textContent = targetValue;
+              }
+            };
+            
+            updateCounter();
+            observer.unobserve(element);
+          }
+        });
+      }, {
+        threshold: 0.5
+      });
+      
+      digitElements.forEach(element => {
+        observer.observe(element);
+      });
     }
   },
   data() {
@@ -201,30 +318,7 @@ export default {
   },
   mounted() {
     this.typeText();
-  },
-  methods: {
-    typeText() {
-      const fullText = this.typingTexts[this.currentTextIndex];
-      
-      if (this.isDeleting) {
-        this.currentText = fullText.substring(0, this.currentText.length - 1);
-      } else {
-        this.currentText = fullText.substring(0, this.currentText.length + 1);
-      }
-      
-      let typeSpeed = this.isDeleting ? this.deletingSpeed : this.typingSpeed;
-      
-      if (!this.isDeleting && this.currentText === fullText) {
-        typeSpeed = this.pauseDuration;
-        this.isDeleting = true;
-      } else if (this.isDeleting && this.currentText === '') {
-        this.isDeleting = false;
-        this.currentTextIndex = (this.currentTextIndex + 1) % this.typingTexts.length;
-        typeSpeed = 500;
-      }
-      
-      setTimeout(() => this.typeText(), typeSpeed);
-    }
+    this.initDigitAnimations();
   }
 }
 </script>
@@ -246,20 +340,17 @@ export default {
   z-index: -1;
   pointer-events: none;
 }
-
 /* Animated tech icons */
 .tech-icon {
   animation: float-tech 20s infinite ease-in-out;
   filter: blur(1px);
 }
-
 @keyframes float-tech {
   0%, 100% { transform: translate(0, 0) rotate(0deg); }
   25% { transform: translate(10px, -15px) rotate(5deg); }
   50% { transform: translate(5px, 10px) rotate(-5deg); }
   75% { transform: translate(-10px, 5px) rotate(3deg); }
 }
-
 /* Responsive adjustments for glitch text */
 .glitch {
   position: relative;
@@ -289,6 +380,10 @@ export default {
   color: #ff00ff;
   z-index: -2;
 }
+.glitch {
+  margin-top: 4rem; /* Add this line or adjust the value */
+}
+
 @keyframes glitch-1 {
   0%, 14%, 15%, 49%, 50%, 99%, 100% {
     transform: translate(0);
@@ -305,19 +400,16 @@ export default {
     transform: translate(2px, -2px);
   }
 }
-
 /* Typing text effect */
 .typing-text {
   border-right: 2px solid #00d4ff;
   padding-right: 5px;
   animation: blink 1s infinite;
 }
-
 @keyframes blink {
   0%, 100% { border-color: transparent; }
   50% { border-color: #00d4ff; }
 }
-
 /* Enhanced profile image container */
 .glass-card {
   background: rgba(255, 255, 255, 0.05);
@@ -352,7 +444,6 @@ export default {
   box-shadow: 0 15px 35px 0 rgba(31, 38, 135, 0.3);
   border-color: rgba(0, 212, 255, 0.5);
 }
-
 /* Animated border effect */
 .animate-border {
   position: absolute;
@@ -365,7 +456,6 @@ export default {
   z-index: -1;
   animation: gradient-border 3s ease infinite;
 }
-
 .animate-border-inner {
   position: absolute;
   top: 0;
@@ -375,13 +465,11 @@ export default {
   border-radius: 0px;
   background: #0a0a0a;
 }
-
 @keyframes gradient-border {
   0% { background-position: 0% 50%; }
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
-
 /* Glass reflection effect */
 .glass-reflection {
   position: absolute;
@@ -398,7 +486,6 @@ export default {
 .glass-hover:hover .glass-reflection {
   opacity: 1;
 }
-
 /* Enhanced skill tags */
 .skill-tag-enhanced {
   position: relative;
@@ -438,7 +525,6 @@ export default {
   border: 1px solid rgba(0, 212, 255, 0.3);
   box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
 }
-
 /* Enhanced buttons */
 .btn {
   position: relative;
@@ -448,29 +534,24 @@ export default {
   font-weight: 600;
   letter-spacing: 0.5px;
 }
-
 .btn-enhanced {
   background: rgba(255, 255, 255, 0.05);
   backdrop-filter: blur(5px);
   -webkit-backdrop-filter: blur(5px);
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .btn-primary {
   background: linear-gradient(45deg, rgba(0, 212, 255, 0.2), rgba(255, 0, 255, 0.2));
   border: 1px solid rgba(0, 212, 255, 0.3);
 }
-
 .btn-outline {
   background: transparent;
   border: 1px solid rgba(0, 212, 255, 0.5);
 }
-
 .btn:hover {
   transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 212, 255, 0.2);
 }
-
 /* Enhanced particles */
 .home-particle {
   position: absolute;
@@ -482,7 +563,6 @@ export default {
   opacity: 0;
   animation: home-particle-float var(--duration, 8s) infinite linear;
 }
-
 @keyframes home-particle-float {
   0% {
     transform: translateY(100vh) translateX(0);
@@ -499,7 +579,161 @@ export default {
     opacity: 0;
   }
 }
-
+/* Enhanced Digit Animations - Home specific */
+.home-digit {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  background: linear-gradient(90deg, #00d4ff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  display: inline-block;
+  position: relative;
+  transition: all 0.3s ease;
+  font-size: 3rem;
+}
+.home-digit::before {
+  content: attr(data-target);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, #ff00ff, #00d4ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all 0.3s ease;
+}
+.home-digit:hover::before {
+  opacity: 1;
+  transform: translateY(0);
+}
+.home-digit:hover {
+  transform: translateY(-5px);
+  text-shadow: 0 5px 15px rgba(0, 212, 255, 0.5);
+}
+/* Enhanced Digit Container */
+.digit-container {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+.digit-container .digit {
+  display: inline-block;
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 3rem;
+  background: linear-gradient(90deg, #00d4ff, #ff00ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  position: relative;
+  transition: all 0.3s ease;
+  animation: digitPulse 2s infinite alternate;
+}
+.digit-container .digit:nth-child(odd) {
+  animation-delay: 0.1s;
+}
+.digit-container .digit:nth-child(even) {
+  animation-delay: 0.2s;
+}
+@keyframes digitPulse {
+  0% {
+    transform: translateY(0) scale(1);
+    text-shadow: 0 0 5px rgba(0, 212, 255, 0.5);
+  }
+  100% {
+    transform: translateY(-5px) scale(1.05);
+    text-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
+  }
+}
+.digit-container .digit:hover {
+  transform: translateY(-10px) scale(1.1);
+  text-shadow: 0 10px 25px rgba(0, 212, 255, 0.8);
+}
+.digit-container .digit::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  width: 100%;
+  height: 3px;
+  background: linear-gradient(90deg, #00d4ff, #ff00ff);
+  border-radius: 3px;
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+.digit-container .digit:hover::after {
+  transform: scaleX(1);
+}
+/* Enhanced Digit Separator */
+.digit-separator {
+  font-family: 'Orbitron', sans-serif;
+  font-weight: 700;
+  font-size: 2.5rem;
+  color: #00d4ff;
+  margin: 0 0.2rem;
+  animation: separatorPulse 2s infinite alternate;
+}
+@keyframes separatorPulse {
+  0%, 100% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.2);
+  }
+}
+/* Enhanced Digit Label */
+.digit-label {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  color: #a0a0a0;
+  margin-top: 0.5rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: color 0.3s ease;
+}
+.digit-container:hover + .digit-label {
+  color: #00d4ff;
+}
+/* Enhanced Digit Card */
+.digit-card {
+  background: rgba(10, 10, 10, 0.7);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.digit-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1), transparent 70%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.digit-card:hover::before {
+  opacity: 1;
+}
+.digit-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.3);
+  border-color: rgba(0, 212, 255, 0.5);
+}
 /* Responsive adjustments for the profile image container */
 @media (max-width: 1024px) {
   .float-animation {
@@ -515,8 +749,19 @@ export default {
   .float-animation {
     animation: float 10s ease-in-out infinite;
   }
+  
+  .home-digit {
+    font-size: 2rem;
+  }
+  
+  .digit-separator {
+    font-size: 1.8rem;
+  }
+  
+  .digit-card {
+    padding: 1.5rem;
+  }
 }
-
 /* Hide scroll indicator on small screens */
 @media (max-width: 640px) {
   .scroll-indicator {

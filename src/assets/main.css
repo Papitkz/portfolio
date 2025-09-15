@@ -1239,3 +1239,50 @@ body {
   background: rgba(10, 10, 10, 0.8);
   border-color: rgba(0, 212, 255, 0.3);
 }
+.home-particle {
+  will-change: transform, opacity;
+  transform: translateZ(0);
+}
+.home-particle {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  background: #00d4ff;
+  border-radius: 50%;
+  pointer-events: none;
+  opacity: 0;
+  animation: home-particle-float 8s infinite linear;
+}
+
+@keyframes home-particle-float {
+  0% {
+    transform: translateY(100vh) translateX(0);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.4;
+  }
+  90% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: translateY(-100vh) translateX(100px);
+    opacity: 0;
+  }
+}
+/* Optimize for mobile devices */
+@media (max-width: 768px) {
+  .home-particle,
+  .binary-digit {
+    will-change: auto;
+  }
+  
+  /* Reduce number of particles on mobile */
+  .home-particle:nth-child(n+15) {
+    display: none;
+  }
+  
+  .binary-digit:nth-child(n+30) {
+    display: none;
+  }
+}
