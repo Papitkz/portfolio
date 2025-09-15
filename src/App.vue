@@ -4,9 +4,16 @@
     <div class="dynamic-bg"></div>
     <div class="animated-grid"></div>
     
-    <!-- Loading Overlay -->
+    <!-- Enhanced Loading Overlay -->
     <div class="loading-overlay" :class="{ 'hidden': !isLoading }">
-      <div class="loading-spinner"></div>
+      <div class="loader-container">
+        <div class="loader">
+          <div class="loader-circle"></div>
+          <div class="loader-circle"></div>
+          <div class="loader-circle"></div>
+        </div>
+        <div class="loader-text">LOADING PORTFOLIO</div>
+      </div>
     </div>
     
     <!-- Page Transition -->
@@ -16,27 +23,32 @@
     <div class="cursor"></div>
     <div class="cursor-follower"></div>
     
-    <!-- Navigation -->
-    <nav class="fixed w-full bg-gray-900/90 backdrop-blur-md z-50 transition-all duration-300" :class="{ 'shadow-lg': scrolled }">
+    <!-- Enhanced Glass Navigation -->
+    <nav class="fixed w-full glass-nav z-50 transition-all duration-300" :class="{ 'shadow-lg': scrolled }">
       <div class="container mx-auto px-6 py-4">
         <div class="flex justify-between items-center">
-          <div class="text-2xl font-bold text-cyan-400" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">JFI</div>
+          <div class="text-2xl font-bold text-cyan-400 flex items-center" style="font-family: 'Orbitron', sans-serif; letter-spacing: 2px;">
+            <span class="glow-text">JFI</span>
+            <span class="ml-2 text-xs px-2 py-1 bg-cyan-900/50 rounded-full text-cyan-300">FULL STACK</span>
+          </div>
           
           <div class="hidden md:flex space-x-8">
             <a 
               v-for="(item, index) in navItems" 
               :key="item.name"
               :href="item.href" 
-              class="nav-link nav-link-enhanced relative" 
+              class="nav-link nav-link-enhanced relative group" 
               :class="{ 'active': activeSection === item.section }"
               @click="handleNavClick($event, item.section, item.href)"
               ref="navLinks"
             >
-              {{ item.name }}
+              <span class="relative z-10">{{ item.name }}</span>
+              <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/10 to-purple-500/10 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div class="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-cyan-400 to-purple-500 transition-all duration-300 group-hover:w-full"></div>
             </a>
           </div>
           
-          <button @click="toggleMobileMenu" class="md:hidden text-cyan-400">
+          <button @click="toggleMobileMenu" class="md:hidden text-cyan-400 p-2 rounded-lg glass-effect">
             <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path v-if="!mobileMenuOpen" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
               <path v-else stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
@@ -45,16 +57,16 @@
         </div>
         
         <!-- Mobile Menu -->
-        <div v-if="mobileMenuOpen" class="md:hidden mt-4 pb-4">
+        <div v-if="mobileMenuOpen" class="md:hidden mt-4 pb-4 glass-menu rounded-xl p-4">
           <a 
             v-for="item in navItems" 
             :key="item.name"
             :href="item.href" 
-            class="block py-2 nav-link nav-link-enhanced relative" 
+            class="block py-3 px-4 rounded-lg nav-link nav-link-enhanced relative mb-2" 
             :class="{ 'active': activeSection === item.section }"
             @click="handleNavClick($event, item.section, item.href)"
           >
-            {{ item.name }}
+            <span class="relative z-10">{{ item.name }}</span>
           </a>
         </div>
       </div>
@@ -70,45 +82,45 @@
       <ContactSection />
     </main>
     
-    <!-- Footer -->
-    <footer class="bg-gray-900 border-t border-gray-800 py-8">
+    <!-- Enhanced Footer -->
+    <footer class="glass-footer border-t border-cyan-900/30 py-8">
       <div class="container mx-auto px-6">
         <div class="flex flex-col items-center">
           <!-- Social Media Icons -->
           <div class="flex space-x-6 mb-6">
-            <a href="https://t.me" target="_blank" class="social-icon social-icon-enhanced">
+            <a href="https://t.me" target="_blank" class="social-icon social-icon-enhanced glass-effect p-3 rounded-full">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.568 8.16l-1.696 7.99c-.126.572-.463.712-.935.442l-2.584-1.904-1.247 1.2c-.138.138-.254.254-.52.254l.184-2.65 4.788-4.33c.208-.184-.048-.288-.322-.104l-5.914 3.72-2.55-.796c-.554-.176-.564-.554-.116-.82l9.968-3.84c.464-.176.87.103.72.82z"/>
               </svg>
             </a>
-            <a href="https://instagram.com" target="_blank" class="social-icon social-icon-enhanced">
+            <a href="https://instagram.com" target="_blank" class="social-icon social-icon-enhanced glass-effect p-3 rounded-full">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.281-.073-1.689-.073-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zM5.838 12a6.162 6.162 0 1112.324 0 6.162 6.162 0 01-12.324 0zM12 16a4 4 0 110-8 4 4 0 010 8zm4.965-10.405a1.44 1.44 0 112.881.001 1.44 1.44 0 01-2.881-.001z"/>
               </svg>
             </a>
-            <a href="https://facebook.com" target="_blank" class="social-icon social-icon-enhanced">
+            <a href="https://facebook.com" target="_blank" class="social-icon social-icon-enhanced glass-effect p-3 rounded-full">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
               </svg>
             </a>
-            <a href="https://twitter.com" target="_blank" class="social-icon social-icon-enhanced">
+            <a href="https://twitter.com" target="_blank" class="social-icon social-icon-enhanced glass-effect p-3 rounded-full">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"/>
               </svg>
             </a>
-            <a href="https://wa.me" target="_blank" class="social-icon social-icon-enhanced">
+            <a href="https://wa.me" target="_blank" class="social-icon social-icon-enhanced glass-effect p-3 rounded-full">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
                 <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
               </svg>
             </a>
           </div>
-          <p class="text-gray-400">&copy; {{ new Date().getFullYear() }} John Fritz Izar. All rights reserved.</p>
+          <p class="text-gray-400 text-sm">&copy; {{ new Date().getFullYear() }} John Fritz Izar. All rights reserved.</p>
         </div>
       </div>
     </footer>
     
     <!-- Marquee -->
-    <div class="marquee-container">
+    <div class="marquee-container glass-marquee">
       <div class="marquee">
         <div class="marquee-content">
           <div class="marquee-item">
@@ -168,10 +180,10 @@
     <button 
       v-show="showBackToTop" 
       @click="scrollToTop" 
-      class="fixed bottom-20 right-8 bg-cyan-500 text-gray-900 p-3 rounded-full shadow-lg hover:bg-cyan-400 transition-all duration-300 z-50 transform hover:scale-110"
+      class="fixed bottom-20 right-8 glass-effect p-3 rounded-full shadow-lg hover:bg-cyan-400/20 transition-all duration-300 z-50 transform hover:scale-110"
       aria-label="Back to top"
     >
-      <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path>
       </svg>
     </button>
@@ -194,7 +206,6 @@ const isLoading = ref(true);
 const isPageTransitioning = ref(false);
 const activeSection = ref('home');
 const navLinks = ref([]);
-
 const navItems = [
   { name: 'Home', section: 'home', href: '#home' },
   { name: 'About', section: 'about', href: '#about' },
@@ -383,7 +394,7 @@ const initScrollAnimations = () => {
 onMounted(() => {
   setTimeout(() => {
     isLoading.value = false;
-  }, 1000);
+  }, 1500);
   
   window.addEventListener('scroll', handleScroll);
   initCursor();
@@ -399,39 +410,175 @@ onUnmounted(() => {
 </script>
 
 <style>
-/* Loading Overlay */
+/* Enhanced Loading Overlay */
 .loading-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: #0a0a0a;
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 9999;
-  transition: opacity 0.5s, visibility 0.5s;
+  transition: opacity 0.8s, visibility 0.8s;
 }
 .loading-overlay.hidden {
   opacity: 0;
   visibility: hidden;
 }
-.loading-spinner {
-  width: 60px;
-  height: 60px;
-  border: 4px solid rgba(0, 212, 255, 0.2);
-  border-top-color: #00d4ff;
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.loader {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 20px;
+}
+.loader-circle {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   border-radius: 50%;
-  animation: spin 1s infinite linear;
+  border: 3px solid transparent;
+  border-top-color: #00d4ff;
+  animation: spin 1.5s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
+}
+.loader-circle:nth-child(2) {
+  width: 80%;
+  height: 80%;
+  top: 10%;
+  left: 10%;
+  border-top-color: #ff00ff;
+  animation-delay: 0.2s;
+}
+.loader-circle:nth-child(3) {
+  width: 60%;
+  height: 60%;
+  top: 20%;
+  left: 20%;
+  border-top-color: #00ff88;
+  animation-delay: 0.4s;
 }
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
 }
+.loader-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 14px;
+  letter-spacing: 2px;
+  color: #00d4ff;
+  animation: pulse 1.5s infinite;
+}
+@keyframes pulse {
+  0%, 100% { opacity: 0.4; }
+  50% { opacity: 1; }
+}
+
+/* Enhanced Glass Effects */
+.glass-nav {
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(0, 212, 255, 0.1);
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+}
+.glass-menu {
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 26, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+}
+.glass-footer {
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.7) 0%, rgba(26, 26, 26, 0.7) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 212, 255, 0.2);
+}
+.glass-marquee {
+  background: linear-gradient(135deg, rgba(10, 10, 10, 0.8) 0%, rgba(26, 26, 26, 0.8) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(0, 212, 255, 0.3);
+}
+.glass-effect {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.05) 0%, rgba(255, 0, 255, 0.05) 100%);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border: 1px solid rgba(0, 212, 255, 0.2);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.glass-effect::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s;
+}
+.glass-effect:hover::before {
+  transform: translateX(100%);
+}
+.glass-effect:hover {
+  background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
+  border-color: rgba(0, 212, 255, 0.4);
+  box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2);
+  transform: translateY(-2px);
+}
+
+/* Enhanced Navigation */
+.nav-link {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  padding: 0.5rem 0;
+  font-family: 'Orbitron', sans-serif;
+  letter-spacing: 1px;
+}
+.nav-link::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: linear-gradient(90deg, #00d4ff, #ff00ff);
+  transition: width 0.3s ease;
+}
+.nav-link:hover::after,
+.nav-link.active::after {
+  width: 100%;
+}
+.nav-link.active {
+  color: #00d4ff;
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.5);
+}
+
+/* Glowing Text Effect */
+.glow-text {
+  text-shadow: 0 0 10px rgba(0, 212, 255, 0.7);
+}
+
 /* Social Icons */
 .social-icon {
   @apply text-gray-400 transition-all duration-300 transform hover:scale-125 hover:text-cyan-400;
 }
+
 /* Enhanced animations */
 .float-animation {
   animation: float 6s ease-in-out infinite;
@@ -440,30 +587,7 @@ onUnmounted(() => {
   0%, 100% { transform: translateY(0) rotate(0deg); }
   50% { transform: translateY(-20px) rotate(5deg); }
 }
-/* Glowing effect for cards */
-.card-glow {
-  position: relative;
-}
-.card-glow::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  border-radius: 0;
-  padding: 2px;
-  background: linear-gradient(45deg, #00d4ff, #ff00ff, #00d4ff);
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  opacity: 0;
-  transition: opacity 0.3s;
-  z-index: -1;
-}
-.card-glow:hover::before {
-  opacity: 1;
-}
+
 /* Enhanced button effects */
 .btn {
   position: relative;
@@ -496,6 +620,7 @@ onUnmounted(() => {
     opacity: 0;
   }
 }
+
 /* Enhanced timeline for mobile */
 @media (max-width: 767px) {
   .timeline-line {
