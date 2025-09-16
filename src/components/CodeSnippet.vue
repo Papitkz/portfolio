@@ -2,7 +2,7 @@
   <div class="code-snippet-container" :class="{ 'hidden': !isVisible }">
     <button 
       @click="toggleSnippet" 
-      class="snippet-toggle-btn"
+      class="snippet-toggle-btn glass-effect"
       :class="{ 'collapsed': !isVisible }"
       aria-label="Toggle code snippet"
     >
@@ -14,7 +14,7 @@
       </svg>
     </button>
     
-    <div class="code-editor" :class="{ 'collapsed': !isVisible }">
+    <div class="code-editor glass-effect" :class="{ 'collapsed': !isVisible }">
       <div class="editor-header">
         <div class="editor-controls">
           <span class="control close"></span>
@@ -117,6 +117,7 @@ export default {
 </script>
 
 <style scoped>
+/* Code Snippet Container */
 .code-snippet-container {
   position: fixed;
   bottom: 80px;
@@ -124,6 +125,7 @@ export default {
   width: 520px;
   z-index: 40;
   transition: all 0.3s ease;
+  transform-style: preserve-3d;
 }
 
 .code-snippet-container.hidden {
@@ -140,7 +142,6 @@ export default {
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(0, 212, 255, 0.3);
-  border-radius: 0 8px 8px 0;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -148,30 +149,33 @@ export default {
   transition: all 0.3s ease;
   cursor: pointer;
   z-index: 41;
+  border-radius: 0;
 }
 
 .snippet-toggle-btn:hover {
   background: linear-gradient(135deg, rgba(0, 212, 255, 0.3), rgba(255, 0, 255, 0.3));
   border-color: rgba(0, 212, 255, 0.5);
-  transform: scale(1.05);
+  transform: scale(1.05) translateZ(10px);
 }
 
 .snippet-toggle-btn.collapsed {
   right: -36px;
-  border-radius: 0 8px 8px 0;
+  border-radius: 0;
 }
 
 .code-editor {
   background: #1e1e1e;
-  border-radius: 8px;
+  border-radius: 0;
   overflow: hidden;
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
   border: 1px solid rgba(0, 212, 255, 0.3);
   transition: all 0.3s ease;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
 }
 
 .code-editor.collapsed {
-  border-radius: 0 8px 8px 0;
+  border-radius: 0;
 }
 
 .editor-header {
@@ -180,6 +184,7 @@ export default {
   display: flex;
   align-items: center;
   border-bottom: 1px solid #444;
+  border-radius: 0;
 }
 
 .editor-controls {
@@ -190,7 +195,7 @@ export default {
 .control {
   width: 12px;
   height: 12px;
-  border-radius: 50%;
+  border-radius: 0;
 }
 
 .close {
@@ -220,6 +225,7 @@ export default {
   color: #f8f8f2;
   max-height: 300px;
   overflow-y: auto;
+  border-radius: 0;
 }
 
 .editor-content::-webkit-scrollbar {
@@ -232,7 +238,7 @@ export default {
 
 .editor-content::-webkit-scrollbar-thumb {
   background: #555;
-  border-radius: 3px;
+  border-radius: 0;
 }
 
 .language-javascript {

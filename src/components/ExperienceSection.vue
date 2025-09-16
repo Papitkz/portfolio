@@ -9,6 +9,10 @@
     <div class="absolute top-20 left-10 w-32 h-32 border-l-2 border-t-2 border-cyan-500/20 transform rotate-45"></div>
     <div class="absolute bottom-20 right-10 w-40 h-40 border-r-2 border-b-2 border-purple-500/20 transform rotate-45"></div>
     
+    <!-- Floating elements -->
+    <div class="geometric-shape shape-triangle floating-element" style="top: 14%; left: 8%; animation-delay: 0.6s;"></div>
+    <div class="geometric-shape shape-hexagon floating-element" style="top: 68%; right: 9%; animation-delay: 2.4s;"></div>
+    
     <div class="container mx-auto px-6 relative z-10">
       <div class="text-center mb-16 animate-on-scroll fade-in-up">
         <h2 class="section-title">EXPERIENCE</h2>
@@ -20,7 +24,7 @@
         
         <div 
           v-for="(job, index) in jobs" 
-          :key="index" 
+          :key="job.title" 
           class="mb-16 md:mb-20 relative animate-on-scroll"
           :class="index % 2 === 0 ? 'fade-in-left' : 'fade-in-right'" 
           :style="{ 'animation-delay': `${index * 0.2}s` }"
@@ -65,7 +69,7 @@
                 </div>
                 <div class="flex items-center" :class="index % 2 === 0 ? 'md:justify-end' : ''">
                   <svg class="w-5 h-5 text-purple-400 mr-2 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 10-2 0v1H7V3a1 1 0 00-1-1zm0 5a1 1 0 000 2h8a1 1 0 100-2H6z" clip-rule="evenodd"></path>
+                    <path fill-rule="evenodd" d="M6 2a1 1 0 00-1 1v1H4a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V6a2 2 0 00-2-2h-1V3a1 1 0 00-1-1zM9 4h6v1H9V4z" clip-rule="evenodd"></path>
                   </svg>
                   <p class="text-gray-400">{{ job.period }}</p>
                 </div>
@@ -182,6 +186,9 @@ export default {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  border-radius: 0;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
 }
 .glass-effect::before {
   content: '';
@@ -201,18 +208,21 @@ export default {
   background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
   border-color: rgba(0, 212, 255, 0.4);
   box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2);
-  transform: translateY(-2px);
+  transform: translateY(-2px) translateZ(20px);
 }
 
 /* Enhanced Timeline Dot */
 .timeline-dot {
   @apply flex items-center justify-center;
+  border-radius: 0;
 }
 .timeline-dot-enhanced {
   transition: all 0.3s ease;
+  transform-style: preserve-3d;
 }
 .timeline-dot-enhanced:hover {
-  transform: translateX(-50%) scale(1.2);
+  transform: translateX(-50%) scale(1.2) translateZ(20px);
+  box-shadow: 0 0 20px rgba(0, 212, 255, 0.8);
 }
 
 /* Mobile-specific styles for timeline */
@@ -258,6 +268,9 @@ export default {
   transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
+  border-radius: 0;
+  transform-style: preserve-3d;
+  transform: translateZ(0);
 }
 .card::before {
   content: '';
@@ -277,7 +290,7 @@ export default {
   background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(255, 0, 255, 0.1) 100%);
   border-color: rgba(0, 212, 255, 0.4);
   box-shadow: 0 8px 30px rgba(0, 212, 255, 0.2);
-  transform: translateY(-2px);
+  transform: translateY(-2px) translateZ(20px);
 }
 
 /* Skill tags without rounded corners */
@@ -289,6 +302,7 @@ span.px-3.py-1 {
   text-transform: uppercase;
   position: relative;
   overflow: hidden;
+  transform-style: preserve-3d;
 }
 span.px-3.py-1::before {
   content: '';
@@ -302,5 +316,9 @@ span.px-3.py-1::before {
 }
 span.px-3.py-1:hover::before {
   left: 100%;
+}
+span.px-3.py-1:hover {
+  transform: scale(1.05) translateZ(10px);
+  box-shadow: 0 5px 15px rgba(0, 212, 255, 0.3);
 }
 </style>
