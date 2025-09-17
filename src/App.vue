@@ -1,12 +1,32 @@
 <template>
   <div class="gradient-bg">
-    <!-- Dynamic Background -->
+    <!-- Background Music Player -->
+    <audio ref="backgroundMusic" loop>
+      <source :src="currentTrack" type="audio/mpeg">
+      Your browser does not support the audio element.
+    </audio>
+
+    <!-- Rest of the template remains the same -->
     <div class="dynamic-bg"></div>
     <div class="animated-grid"></div>
+     <button 
+      @click="toggleMusic" 
+      class="mb-2 fixed bottom-8 right-8 glass-effect p-3 rounded-full shadow-lg hover:bg-cyan-400/20 transition-all duration-300 z-50 transform hover:scale-110"
+      aria-label="Toggle music"
+    >
+      <svg v-if="isMusicPlaying" class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+      <svg v-else class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.752 11.168l-3.197-2.132A1 1 0 0010 9.87v4.263a1 1 0 001.555.832l3.197-2.132a1 1 0 000-1.664z" />
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+      </svg>
+    </button>
     
-    <!-- Binary Rain Effect -->
+    <!-- Rest of the template remains the same -->
+    <!-- Binary Rain Effect - Reduced particles for performance -->
     <div class="binary-rain">
-      <span v-for="i in 50" :key="i" class="binary-digit" :style="{
+      <span v-for="i in 10" :key="i" class="binary-digit" :style="{
         left: `${Math.random() * 100}%`,
         top: `${Math.random() * 100}%`,
         animationDelay: `${Math.random() * 5}s`,
@@ -37,10 +57,6 @@
     
     <!-- Page Transition -->
     <div class="page-transition" :class="{ 'active': isPageTransitioning }"></div>
-    
-    <!-- Custom Cursor -->
-    <div class="cursor"></div>
-    <div class="cursor-follower"></div>
     
     <!-- Enhanced Glass Navigation -->
     <nav class="fixed w-full glass-nav z-50 transition-all duration-300" :class="{ 'shadow-lg': scrolled }">
@@ -93,7 +109,8 @@
     
     <!-- Main Content -->
     <main>
-      <HomeSection />
+      <HomeSection  />
+      <!-- :isMusicPlaying="isMusicPlaying"/ -->
       <AboutSection />
       <ExperienceSection />
       <EducationSection />
@@ -129,7 +146,7 @@
             </a>
             <a href="https://whatsapp.me" target="_blank" class="social-icon social-icon-enhanced glass-effect p-3 rounded-full">
               <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.347-.497.298-.248-.05-.517-.075-.792-.075-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.347-.497.298-.248-.05-.517-.075-.824-.075-.307 0-.8.115-1.22.573-.42.459-1.6 1.566-1.6 3.816 0 2.25 1.64 4.425 1.869 4.734.229.309 3.219 4.917 7.799 6.89.975.421 1.737.672 2.331.86.98.311 1.872.267 2.576.162.787-.116 2.42-.99 2.76-1.946.34-.956.34-1.775.238-1.946-.102-.171-.372-.27-.782-.472z"/>
               </svg>
             </a>
           </div>
@@ -196,10 +213,11 @@
     </div>
     
     <!-- Back to Top Button -->
+        <!-- v-show="showBackToTop"  -->
+
     <button 
-      v-show="showBackToTop" 
       @click="scrollToTop" 
-      class="fixed bottom-20 right-8 glass-effect p-3 rounded-full shadow-lg hover:bg-cyan-400/20 transition-all duration-300 z-50 transform hover:scale-110"
+      class="fixed bottom-24 right-8 glass-effect p-3 rounded-full shadow-lg hover:bg-cyan-400/20 transition-all duration-300 z-50 transform hover:scale-110"
       aria-label="Back to top"
     >
       <svg class="w-6 h-6 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -207,8 +225,8 @@
       </svg>
     </button>
     
-    <!-- AI Chatbot -->
-    <AiChatbot />
+    <!-- AI Miku Assistant -->
+    <AiMikuAssistant />
   </div>
 </template>
 
@@ -220,7 +238,7 @@ import ExperienceSection from './components/ExperienceSection.vue';
 import EducationSection from './components/EducationSection.vue';
 import ProjectSection from './components/ProjectsSection.vue';
 import ContactSection from './components/ContactSection.vue';
-import AiChatbot from './components/AiChatbot.vue';
+import AiMikuAssistant from './components/AiMikuAssistant.vue';
 
 const mobileMenuOpen = ref(false);
 const scrolled = ref(false);
@@ -229,6 +247,18 @@ const isLoading = ref(true);
 const isPageTransitioning = ref(false);
 const activeSection = ref('home');
 const navLinks = ref([]);
+const backgroundMusic = ref(null);
+const isMusicPlaying = ref(false);
+const currentTrack = ref('');
+
+// Array of background music tracks
+const musicTracks = [
+  '/music/F1.mp3',
+  '/music/F2.mp3',
+  '/music/F3.mp3',
+  '/music/F4.mp3',
+  '/music/F5.mp3'
+];
 
 const navItems = [
   { name: 'Home', section: 'home', href: '#home' },
@@ -241,6 +271,31 @@ const navItems = [
 
 const toggleMobileMenu = () => {
   mobileMenuOpen.value = !mobileMenuOpen.value;
+};
+
+// Function to select a random track
+const selectRandomTrack = () => {
+  const randomIndex = Math.floor(Math.random() * musicTracks.length);
+  return musicTracks[randomIndex];
+};
+
+const toggleMusic = () => {
+  if (!backgroundMusic.value) return;
+  
+  if (isMusicPlaying.value) {
+    backgroundMusic.value.pause();
+  } else {
+    // Select a new random track each time music is turned on
+    currentTrack.value = selectRandomTrack();
+    
+    // We need to reload the audio element when changing the source
+    backgroundMusic.value.load();
+    
+    backgroundMusic.value.play().catch(error => {
+      console.error("Playback failed:", error);
+    });
+  }
+  isMusicPlaying.value = !isMusicPlaying.value;
 };
 
 const createRipple = (event, element) => {
@@ -312,81 +367,34 @@ const scrollToTop = () => {
   }, 400);
 };
 
+// Debounced scroll handler for better performance
+let scrollTimeout;
 const handleScroll = () => {
-  scrolled.value = window.scrollY > 10;
-  showBackToTop.value = window.scrollY > 300;
-  
-  // Update active section based on scroll position
-  const sections = navItems.map(item => item.section);
-  const scrollPosition = window.scrollY + 100;
-  
-  for (const section of sections) {
-    const element = document.getElementById(section);
-    if (element) {
-      const offsetTop = element.offsetTop;
-      const offsetHeight = element.offsetHeight;
-      
-      if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
-        activeSection.value = section;
-        break;
+  clearTimeout(scrollTimeout);
+  scrollTimeout = setTimeout(() => {
+    scrolled.value = window.scrollY > 10;
+    showBackToTop.value = window.scrollY > 300;
+    
+    // Update active section based on scroll position
+    const sections = navItems.map(item => item.section);
+    const scrollPosition = window.scrollY + 100;
+    
+    for (const section of sections) {
+      const element = document.getElementById(section);
+      if (element) {
+        const offsetTop = element.offsetTop;
+        const offsetHeight = element.offsetHeight;
+        
+        if (scrollPosition >= offsetTop && scrollPosition < offsetTop + offsetHeight) {
+          activeSection.value = section;
+          break;
+        }
       }
     }
-  }
+  }, 10);
 };
 
-// Custom Cursor
-const initCursor = () => {
-  const cursor = document.querySelector('.cursor');
-  const follower = document.querySelector('.cursor-follower');
-  
-  let mouseX = 0, mouseY = 0;
-  let followerX = 0, followerY = 0;
-  
-  document.addEventListener('mousemove', (e) => {
-    mouseX = e.clientX;
-    mouseY = e.clientY;
-    
-    cursor.style.left = mouseX + 'px';
-    cursor.style.top = mouseY + 'px';
-  });
-  
-  // Smooth follower animation
-  const animateFollower = () => {
-    followerX += (mouseX - followerX) * 0.1;
-    followerY += (mouseY - followerY) * 0.1;
-    
-    follower.style.left = followerX + 'px';
-    follower.style.top = followerY + 'px';
-    
-    requestAnimationFrame(animateFollower);
-  };
-  
-  animateFollower();
-  
-  document.addEventListener('mousedown', () => {
-    cursor.classList.add('hover');
-    follower.classList.add('hover');
-  });
-  
-  document.addEventListener('mouseup', () => {
-    cursor.classList.remove('hover');
-    follower.classList.remove('hover');
-  });
-  
-  document.querySelectorAll('a, button, .btn, .nav-link').forEach(el => {
-    el.addEventListener('mouseenter', () => {
-      cursor.classList.add('hover');
-      follower.classList.add('hover');
-    });
-    
-    el.addEventListener('mouseleave', () => {
-      cursor.classList.remove('hover');
-      follower.classList.remove('hover');
-    });
-  });
-};
-
-// Enhanced Scroll Animations
+// Optimized scroll animations
 const initScrollAnimations = () => {
   const animatedElements = document.querySelectorAll('.animate-on-scroll, .fade-in-up, .fade-in-down, .fade-in-left, .fade-in-right, .zoom-in, .rotate-in');
   
@@ -415,7 +423,7 @@ const initScrollAnimations = () => {
   });
 };
 
-// Enhanced Digit Animation
+// Optimized digit animations
 const initDigitAnimations = () => {
   const digitElements = document.querySelectorAll('.digit-animate');
   
@@ -458,20 +466,42 @@ onMounted(() => {
     isLoading.value = false;
   }, 1500);
   
-  window.addEventListener('scroll', handleScroll);
-  initCursor();
+  window.addEventListener('scroll', handleScroll, { passive: true });
   initScrollAnimations();
   initDigitAnimations();
   
   // Store nav links references
   navLinks.value = document.querySelectorAll('.nav-link');
+  
+  // Initialize background music with a random track
+  if (backgroundMusic.value) {
+    // Set initial random track
+    currentTrack.value = selectRandomTrack();
+    
+    // Set volume to a reasonable level (0.3 = 30%)
+    backgroundMusic.value.volume = 0.3;
+    
+    // Try to autoplay (might be blocked by browser)
+    backgroundMusic.value.play().then(() => {
+      isMusicPlaying.value = true;
+    }).catch(error => {
+      console.log("Autoplay prevented:", error);
+      // Music will play when user clicks the play button
+    });
+  }
 });
 
 onUnmounted(() => {
   window.removeEventListener('scroll', handleScroll);
+  
+  // Pause music when component is unmounted
+  if (backgroundMusic.value && isMusicPlaying.value) {
+    backgroundMusic.value.pause();
+  }
 });
 </script>
 
+<!-- Styles remain the same as in the original code -->
 <style>
 /* Enhanced Loading Overlay */
 .loading-overlay {
@@ -647,8 +677,8 @@ onUnmounted(() => {
   animation: float 6s ease-in-out infinite;
 }
 @keyframes float {
-  0%, 100% { transform: translateY(0) rotate(0deg); }
-  50% { transform: translateY(-20px) rotate(5deg); }
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
 }
 
 /* Enhanced button effects */
@@ -882,7 +912,7 @@ onUnmounted(() => {
 
 /* Enhanced Digit Card */
 .digit-card {
-  background: rgba(10, 10, 10, 0.7);
+  background: rgba(188, 72, 72, 0.7);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
   border: 1px solid rgba(0, 212, 255, 0.2);
@@ -901,7 +931,7 @@ onUnmounted(() => {
   left: 0;
   width: 100%;
   height: 100%;
-  background: radial-gradient(circle at center, rgba(0, 212, 255, 0.1), transparent 70%);
+  background: radial-gradient(circle at center, rgba(1, 185, 10, 0.1), transparent 70%);
   opacity: 0;
   transition: opacity 0.3s ease;
 }

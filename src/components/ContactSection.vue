@@ -170,20 +170,6 @@
                 </a>
               </div>
             </div>
-            
-            <!-- References section commented out -->
-            <!-- <div class="mt-10">
-              <h3 class="text-xl font-bold text-white mb-4" style="font-family: 'Orbitron', sans-serif;">REFERENCES</h3>
-              <div class="space-y-4">
-                <div v-for="(ref, index) in references" :key="index" class="bg-gray-800 p-4 transition-all duration-300 hover:border-cyan-400 hover:shadow-lg rounded-lg glass-hover">
-                  <div class="glass-reflection"></div>
-                  <h4 class="font-semibold text-white">{{ ref.name }}</h4>
-                  <p class="text-gray-400 text-sm">{{ ref.company }}</p>
-                  <p class="text-gray-400 text-sm">Phone: {{ ref.phone }}</p>
-                  <p class="text-gray-400 text-sm">Email: {{ ref.email }}</p>
-                </div>
-              </div>
-            </div> -->
           </div>
         </div>
       </div>
@@ -201,21 +187,6 @@ export default {
         subject: '',
         message: ''
       }
-      // References data commented out
-      // references: [
-      //   {
-      //     name: 'Michael Padon',
-      //     company: 'HRD Singapore Pte Ltd',
-      //     phone: '0917-185-0722',
-      //     email: 'michaelpadon81@gmail.com'
-      //   },
-      //   {
-      //     name: 'Noemi Reyes',
-      //     company: '',
-      //     phone: '0919-999-16150',
-      //     email: 'noemireyes@gmail.con'
-      //   }
-      // ]
     }
   },
   methods: {

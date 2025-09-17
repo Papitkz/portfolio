@@ -17,11 +17,11 @@
     <div class="code-editor glass-effect" :class="{ 'collapsed': !isVisible }">
       <div class="editor-header">
         <div class="editor-controls">
-          <span class="control close"></span>
+          <!-- <span class="control close"></span> -->
           <span class="control minimize"></span>
           <span class="control maximize"></span>
         </div>
-        <div class="editor-title">portfolio.js</div>
+        <div class="editor-title mr-5">portfolio.js</div>
       </div>
       <div class="editor-content" v-show="isVisible">
         <pre><code class="language-javascript" v-html="highlightedCode"></code></pre>
