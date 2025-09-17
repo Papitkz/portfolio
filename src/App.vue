@@ -109,8 +109,7 @@
     
     <!-- Main Content -->
     <main>
-      <HomeSection  />
-      <!-- :isMusicPlaying="isMusicPlaying"/ -->
+      <HomeSection  :isMusicPlaying="isMusicPlaying"/>
       <AboutSection />
       <ExperienceSection />
       <EducationSection />
@@ -253,11 +252,11 @@ const currentTrack = ref('');
 
 // Array of background music tracks
 const musicTracks = [
-  '/music/F1.mp3',
-  '/music/F2.mp3',
-  '/music/F3.mp3',
-  '/music/F4.mp3',
-  '/music/F5.mp3'
+  new URL('./music/F1.mp3', import.meta.url).href,
+  new URL('./music/F2.mp3', import.meta.url).href,
+  new URL('./music/F3.mp3', import.meta.url).href,
+  new URL('./music/F4.mp3', import.meta.url).href,
+  new URL('./music/F5.mp3', import.meta.url).href
 ];
 
 const navItems = [
@@ -284,6 +283,7 @@ const toggleMusic = () => {
   
   if (isMusicPlaying.value) {
     backgroundMusic.value.pause();
+    isMusicPlaying.value = false;
   } else {
     // Select a new random track each time music is turned on
     currentTrack.value = selectRandomTrack();
@@ -291,11 +291,13 @@ const toggleMusic = () => {
     // We need to reload the audio element when changing the source
     backgroundMusic.value.load();
     
-    backgroundMusic.value.play().catch(error => {
+    backgroundMusic.value.play().then(() => {
+      isMusicPlaying.value = true;
+    }).catch(error => {
       console.error("Playback failed:", error);
+      isMusicPlaying.value = false;
     });
   }
-  isMusicPlaying.value = !isMusicPlaying.value;
 };
 
 const createRipple = (event, element) => {
