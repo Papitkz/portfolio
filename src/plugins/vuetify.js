@@ -1,20 +1,25 @@
+// plugins/vuetify.js
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/styles'
 import { createVuetify } from 'vuetify'
 import * as components from 'vuetify/components'
 import * as directives from 'vuetify/directives'
-import '@mdi/font/css/materialdesignicons.css'
-import 'vuetify/styles'
 
 export default createVuetify({
   components,
   directives,
   theme: {
-    defaultTheme: 'dark',
+    defaultTheme: 'light',
     themes: {
-      dark: {
+      light: {
         colors: {
-          primary: '#1E88E5',
-          secondary: '#424242',
-          accent: '#82B1FF',
+          primary: '#D4AF37', // 金色
+          secondary: '#FFFFFF', // 白色
+          accent: '#F8F8F8',   // 浅灰背景
+          error: '#B00020',
+          info: '#2196F3',
+          success: '#4CAF50',
+          warning: '#FB8C00',
         },
       },
     },
